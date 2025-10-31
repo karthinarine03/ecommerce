@@ -21,9 +21,23 @@ const productSchema = mongoose.Schema({
         type : Number,
         default : 0,
     },
-    review : {
-
+    ratings : {
+        type : Number
     },
+    reviews : [
+        {
+            user : {
+                type : mongoose.Schema.Types.ObjectId,
+                ref : "User"
+            },
+            rating : {
+                type : Number
+            },
+            comment : {
+                type : String,
+            }
+        }
+    ],
     images : [{
         publicId : String,
         url : String
