@@ -4,15 +4,21 @@ import userRouter from './Router/User.js'
 import errorHandling from './Middlewares/errorHandling.js';
 import productRouter from './Router/Product.js'
 import seeder from './Utils/seeder.js';
+import cors from "cors"
+import deleteData from './Utils/deleteData.js';
 
 const app=express();
 app.use(express.json());
+app.use(cors())
 
 
 mongodb();
 
 //seeding the data 
 // seeder()
+
+//removal of data
+// deleteData()
 
 
 app.use("/api/v1",userRouter);
