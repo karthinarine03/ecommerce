@@ -1,24 +1,29 @@
 import catchAsynError from "../Middlewares/catchAsynError.js";
 import User from "../Model/User.js";
 import sendtoken from "../Utils/sendtoken.js";
-
-
-export const register=catchAsynError(async(req,res)=>{
+import sendmail from "../Utils/sendmail.js";
+import crypt from 'crypto'
+export const register=catchAsynError(async(req,res,next)=>{
         const {name,email,password}=req.body;
         const user=await User.create({name,email,password});
         
         sendtoken(user,201,res)
 });
 
-export const login=catchAsynError(async(req,res)=>{
+export const login=catchAsynError(async(req,res,next)=>{
         const {email,password}=req.body;
         const user=await User.findOne({email}).select("+password");
-        if(!user) return next(new Error("Register before login"))
-        const ispasswordmatched=await user.comparepasword(password);
+         if(!user){
+                return next(new Error("email is not found"));
+        }
+        const ispasswordmatched=await user.comparepassword(password);
+        if(!ispasswordmatched){
+                return next(new Error("password not matched"));
+        }
         sendtoken(user,201,res);
 })
 
-export const logout=catchAsynError(async(req,res)=>{
+export const logout=catchAsynError(async(req,res,next)=>{
 
         res.cookie("token",null,{
                 expires:new Date(Date()),
@@ -27,4 +32,55 @@ export const logout=catchAsynError(async(req,res)=>{
         res.status(201).json({
                 message:"logged out"
         })
+})
+
+export const forgotpassword=catchAsynError(async(req,res,next)=>{
+        const user=await User.findOne({email:req.body.email});
+        if(!user){
+                return next(new("email is not found"));
+        }
+        const resettoken=user.resetpasswordtoken();
+
+        await user.save();
+
+        const reseturl=`https://localhost:3000/api/v1/resetpassword/${resettoken}`;
+        console.log(resettoken);
+        
+        await sendmail({
+                email:user.email,
+                subject:"password recovery",
+                message:reseturl
+        })
+
+        res.status(200).json({
+                message:"the resetpassword sucessfull",
+                sucess:true
+        })
+
+})
+
+
+export const resetpassword=catchAsynError(async(req,res,next)=>{
+        const resetpasswordtoken=crypt.createHash("sha256").update(req.params.token).digest("hex");
+
+        const user=await User.findOne({
+                resetPasswordToken:resetpasswordtoken,
+                resetPassswordTokenExpires:{$gt:Date.now()}
+        })
+
+        if(!user){
+                return next(new("user not found",404));
+        }
+        if(req.body.password!=req.body.confirmpassword){
+                return next(new("not matched",404));
+        }
+
+        user.password=req.body.password;
+        user.resetPasswordToken=undefined;
+        user.resetPassswordTokenExpires=undefined;
+
+        await user.save();
+
+        sendtoken(user,201,res);
+
 })
