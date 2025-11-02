@@ -13,6 +13,7 @@ export const register=catchAsynError(async(req,res)=>{
 export const login=catchAsynError(async(req,res)=>{
         const {email,password}=req.body;
         const user=await User.findOne({email}).select("+password");
+        if(!user) return next(new Error("Register before login"))
         const ispasswordmatched=await user.comparepasword(password);
         sendtoken(user,201,res);
 })
