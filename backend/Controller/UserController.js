@@ -54,7 +54,8 @@ export const forgotpassword=catchAsynError(async(req,res,next)=>{
 
         res.status(200).json({
                 message:"the resetpassword sucessfull",
-                sucess:true
+                sucess:true,
+                token:resettoken
         })
 
 })
