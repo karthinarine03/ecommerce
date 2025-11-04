@@ -17,6 +17,10 @@ const productSchema = mongoose.Schema({
         enum : ["Electronics" ,"Dress","Accessories","Books"],
         required : [true,"Mention the category"]
     },
+    description : {
+        type : String,
+        required : [true, "Add Description"]
+    },
     stock : {
         type : Number,
         default : 0,
