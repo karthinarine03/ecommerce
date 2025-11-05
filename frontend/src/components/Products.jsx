@@ -1,40 +1,44 @@
-import React, { useCallback, useState } from 'react'
-import { useGetAllProductsQuery } from '../redux/api/product'
-import ProductCard from './ProductCard';
-import Filter from './Filter';
+import React, { useCallback, useState } from "react";
+import { useGetAllProductsQuery } from "../redux/api/product";
+import ProductCard from "./ProductCard";
+import Filter from "./Filter";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate()
+  const [filter, setFilter] = useState({
+    category: "",
+    min: 0,
+    max: 0,
+  });
+  const { data, error, isLoading } = useGetAllProductsQuery(filter);
 
-    const [filter,setFilter] = useState({
-      category : "",
-      min : 0,
-      max : 0
-    })
-    const {data,error,isLoading} = useGetAllProductsQuery(filter);
+  const defineFilter = useCallback((newFilter) => {
+    setFilter(newFilter);
+  }, [filter]);
 
-    const defineFilter = useCallback((newFilter)=>{
-      setFilter(newFilter)
-    },[])
+  //view detail product
+  function handleView(id){
+    navigate(`productDetail/${id}`)
+  }
 
   return (
-    <div className=''>
-      <h1 className='text-4xl font-bold my-2'>Top Related Products</h1>
-        <div>
-          <Filter addFilter={defineFilter}/>
+    <div className="">
+      <h1 className="text-4xl font-bold my-2">Top Related Products</h1>
+      <div className="flex gap-4">
+        <div className="w-1/6 mt-10 ">
+          <Filter addFilter={defineFilter} clearFilter={()=>setFilter({})}/>
         </div>
-        <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-4 '>
-        {data?.data.map((item,key)=>(
-          <a href={`productDetail/${item?._id}`}>
-            <div className='' key={key}>
-            <ProductCard item={item}/>
-            </div>
-          </a>
-        ))}
+        <div className="flex flex-wrap gap-4 ">
+          {data?.data.map((item, key) => (
+              <div className="w-[calc(33.333%-1rem)]" key={key} onClick={()=>handleView(item?._id)}>
+                <ProductCard item={item} />
+              </div>
+          ))}
         </div>
+      </div>
     </div>
+  );
+};
 
-    
-  )
-}
-
-export default Products
+export default Products;

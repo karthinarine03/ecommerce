@@ -6,13 +6,14 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api/v1' }),
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: (queryParams) => {
-          if (queryParams) return {
-            url: `/allProducts?category=${queryParams.category}`
-          }
-        return {
-          url : `/allProducts`}
-      },
+      query: (queryParams) =>({
+        url : `/allProducts`,
+        params : {
+          category : queryParams?.category,
+          min : queryParams?.min,
+          max : queryParams?.max
+        }
+      })
     }),
     getProductsById : builder.query({
       query : (params)=> `/product/${params}`

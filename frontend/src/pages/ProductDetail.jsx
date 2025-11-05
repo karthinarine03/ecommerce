@@ -15,6 +15,7 @@ const ProductDetail = () => {
     <div>
       <Header/>
       <ProductInfo product ={data?.data}/>
+      <hr />
       <Review/>
 
     </div>

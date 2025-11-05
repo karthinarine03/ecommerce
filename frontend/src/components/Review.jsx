@@ -1,13 +1,12 @@
 import React from 'react'
-import StarRatings from 'react-star-ratings'
+import { Rate } from "antd";
 const Review = () => {
   return (
-    <div>
+    <div className='my-4'>
         <div>
-            <h1>Reviews</h1>
+            <h1 className='font-semibold text-xl'>Reviews</h1>
             <div>
-
-
+              {/* <Rate/> */}
             </div>
         </div>
     </div>
