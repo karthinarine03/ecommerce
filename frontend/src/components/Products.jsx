@@ -3,11 +3,13 @@ import { useGetAllProductsQuery } from "../redux/api/product";
 import ProductCard from "./ProductCard";
 import Filter from "./Filter";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Products = () => {
   const navigate = useNavigate()
   const [filter, setFilter] = useState({});
   const { data, error, isLoading } = useGetAllProductsQuery(filter);
+  const {totalQuantity} = useSelector((state)=> state.cart)
 
   const defineFilter = useCallback((newFilter) => {
     setFilter(newFilter);
@@ -20,7 +22,10 @@ const Products = () => {
 
   return (
     <div className="">
-      <h1 className="text-4xl font-bold my-2">Top Related Products</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-4xl font-bold my-2">Top Related Products</h1>
+        <h1 className="text-xl font-semibold">Your cart {totalQuantity}</h1>
+      </div>
       <div className="flex gap-4">
         <div className="w-1/6 mt-10 ">
           <Filter addFilter={defineFilter} clearFilter={()=>setFilter({})}/>
