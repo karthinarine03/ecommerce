@@ -16,7 +16,7 @@ const ProductDetail = () => {
       <Header/>
       <ProductInfo product ={data?.data}/>
       <hr />
-      <Review/>
+      <Review reviews = {data?.data}/>
 
     </div>
   )

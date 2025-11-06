@@ -17,9 +17,16 @@ export const productApi = createApi({
     }),
     getProductsById : builder.query({
       query : (params)=> `/product/${params}`
+    }),
+    addReview : builder.mutation({
+      query : (body)=>({
+        url : '/product/review/add',
+        method : 'post',
+        body
+      })
     })
   }),
 })
 
 
-export const {useGetAllProductsQuery , useGetProductsByIdQuery} =productApi
+export const {useGetAllProductsQuery , useGetProductsByIdQuery , useAddReviewMutation} =productApi

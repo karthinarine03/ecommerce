@@ -6,11 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const navigate = useNavigate()
-  const [filter, setFilter] = useState({
-    category: "",
-    min: 0,
-    max: 0,
-  });
+  const [filter, setFilter] = useState({});
   const { data, error, isLoading } = useGetAllProductsQuery(filter);
 
   const defineFilter = useCallback((newFilter) => {

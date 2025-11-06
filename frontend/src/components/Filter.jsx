@@ -8,7 +8,6 @@ const Filter = ({clearFilter,addFilter}) => {
       min : 0,
       max : 0
     })
-    console.log(filter);
     function handleClear(){
       setFilter({
         category : "",
