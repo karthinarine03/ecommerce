@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
 import ResetPassword from './components/ResetPassword'
+import Cart from './pages/Cart'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path='/register' element={<Register/>}/>
           <Route path='/forgotpassword' element={<ForgotPassword/>}/>
           <Route path='/resetpassword/:token' element={<ResetPassword/>}/>
+          <Route path='/mycart' element={<Cart/>}/>
         </Routes>
       </Router>
       

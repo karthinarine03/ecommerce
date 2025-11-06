@@ -1,8 +1,21 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import {setItems} from '../redux/features/product'
 
 const ProductInfo = React.memo(({ product }) => {
-      const [cartCount, setCartCount ]= useState(1);
+  const dispatch = useDispatch()
+
+  const [cartCount, setCartCount ]= useState(1);
+
+  function handleCart(){
+    const cartProduct = {
+      name : product?.name,
+      price : product?.price,
+      image : product?.images[0]?.url,
+      count : cartCount
+    }
+    dispatch(setItems(cartProduct))
+  }
   return (
     <div className="flex mt-5">
       <div className="">
@@ -23,7 +36,7 @@ const ProductInfo = React.memo(({ product }) => {
             >
               -
             </button>
-            <button className="border py-2  w-full text-xl">Add cart</button>
+            <button className="border py-2  w-full text-xl" onClick={handleCart}>Add cart</button>
             <button
               className="border p-3 rounded-r-2xl"
               onClick={() => setCartCount(cartCount + 1)}
