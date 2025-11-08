@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypt from "crypto";
+
 const userSchema=new mongoose.Schema({
     name:{
         type:String,
@@ -9,11 +10,21 @@ const userSchema=new mongoose.Schema({
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        minlength:6
+    },
+    avatar:{
+        public_id:String,
+        url:String
+    },
+    role:{
+        type:String,
+        default:"user"
     },
     resetPasswordToken:String,
     resetPassswordTokenExpires:Date,

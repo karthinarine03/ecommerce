@@ -5,7 +5,7 @@ export default (user,statuscode,res)=>{
         expires:new Date(
             Date.now()+7*24*60*60*1000
         ),
-        httpsOnly:true,
+        httpOnly:true,
         secure:false
     }
 

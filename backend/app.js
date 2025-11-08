@@ -6,10 +6,14 @@ import productRouter from './Router/Product.js'
 import seeder from './Utils/seeder.js';
 import cors from "cors"
 import deleteData from './Utils/deleteData.js';
+import cookieParser from 'cookie-parser';
 
 const app=express();
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true
+}))
 
 
 mongodb();
@@ -19,7 +23,7 @@ mongodb();
 
 //removal of data
 // deleteData()
-
+app.use(cookieParser());
 
 app.use("/api/v1",userRouter);
 app.use('/api/v1',productRouter)

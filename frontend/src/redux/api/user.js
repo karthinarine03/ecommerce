@@ -24,14 +24,15 @@ export const userApi = createApi({
             body,
             headers:{
                 'Content-Type':'application/json'
-            }
+            },
+            credentials:'include',
         })
     }),
-    logout:build.mutation({
-          query:()=>({
-            url:'/logout',
-            method:'POST'
-          }),
+    logout:build.query({
+         query:()=>({
+          url:"/logout",
+          credentials:"include"
+         })
     }),
     forgotpassword:build.mutation({
       query:(body)=>({
@@ -56,4 +57,4 @@ export const userApi = createApi({
   }),
 })
 
-export const {useLoginMutation,useRegisterMutation,useLogoutMutation,useForgotpasswordMutation,useResetpasswordMutation}=userApi;
+export const {useLoginMutation,useRegisterMutation,useLazyLogoutQuery,useForgotpasswordMutation,useResetpasswordMutation}=userApi;

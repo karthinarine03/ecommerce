@@ -5,6 +5,13 @@ import sendmail from "../Utils/sendmail.js";
 import crypt from 'crypto'
 export const register=catchAsynError(async(req,res,next)=>{
         const {name,email,password}=req.body;
+        if(!name || !email || !password){
+             return next(new Error("fill all fields"))
+        }
+        const isalreadyexists=await User.findOne({email});
+        if(isalreadyexists){
+                return next (new Error("email already exists"));
+        }
         const user=await User.create({name,email,password});
         
         sendtoken(user,201,res)
@@ -27,17 +34,18 @@ export const logout=catchAsynError(async(req,res,next)=>{
 
         res.cookie("token",null,{
                 expires:new Date(Date()),
-                httpOnly:true
-        })
-        res.status(201).json({
+                httpOnly:true,
+                secure:true
+        }).status(201).json({
                 message:"logged out"
         })
 })
 
 export const forgotpassword=catchAsynError(async(req,res,next)=>{
         const user=await User.findOne({email:req.body.email});
+
         if(!user){
-                return next(new("email is not found"));
+                return next(new Error("email is not found"));
         }
         const resettoken=user.resetpasswordtoken();
 
@@ -68,12 +76,8 @@ export const resetpassword=catchAsynError(async(req,res,next)=>{
                 resetPasswordToken:resetpasswordtoken,
                 resetPassswordTokenExpires:{$gt:Date.now()}
         })
-
-        if(!user){
-                return next(new("user not found",404));
-        }
         if(req.body.password!=req.body.confirmpassword){
-                return next(new("not matched",404));
+                return next(new Error("password not matched"));
         }
 
         user.password=req.body.password;

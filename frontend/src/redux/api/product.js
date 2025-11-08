@@ -12,17 +12,20 @@ export const productApi = createApi({
           category : queryParams?.category,
           min : queryParams?.min,
           max : queryParams?.max
-        }
+        },
+        credentials:"include"
       })
     }),
     getProductsById : builder.query({
-      query : (params)=> `/product/${params}`
+      query : (params)=> `/product/${params}`,
+    
     }),
     addReview : builder.mutation({
       query : (body)=>({
         url : '/product/review/add',
         method : 'post',
-        body
+        body,
+        credentials:"include"
       })
     })
   }),
