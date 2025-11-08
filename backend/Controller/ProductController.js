@@ -34,9 +34,7 @@ export const getAllProduct = catchAsynError(async(req,res,next)=>{
 //@ /product/:id
 
 export const getProduct = catchAsynError(async(req,res,next)=>{
-    console.log(req.params.id);
-    
-    
+  
     const data = await Product.findById(req.params.id)
 
     res.status(200).json({
@@ -51,8 +49,10 @@ export const getProduct = catchAsynError(async(req,res,next)=>{
 
 export const addReview = catchAsynError(async(req,res,next)=>{
     
-    // const userId = req?.user?.id;
-    const userId = "6902b718e1146e3d0a1219f6";
+    const userId =  await req?.user?._id.valueOf();
+   
+    
+    // const userId = "6902b718e1146e3d0a1219f6";
 
     // if(!userId) return next (new Error("login Before Reviewing"));
 
@@ -75,11 +75,11 @@ export const addReview = catchAsynError(async(req,res,next)=>{
     }
 
     const isReviewed = await product?.reviews.find(
-        (r)=>r.user.toString() === userId.toString())
+        (r)=>r.user == userId)
     
     if(isReviewed){
         await product.reviews.forEach((review)=>{
-            if(review.user.toString() === userId.toString()){
+            if(review.user == userId){
                 review.rating = Number(rating)
                 review.comment = comment
             }

@@ -4,6 +4,7 @@ import ProductCard from "./ProductCard";
 import Filter from "./Filter";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Rate } from "antd";
 
 const Products = () => {
   const navigate = useNavigate()

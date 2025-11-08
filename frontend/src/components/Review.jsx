@@ -15,6 +15,9 @@ const Review = ({reviews}) => {
       productId : reviews?._id
     })
   }
+
+  console.log(error,isLoading);
+  
   return (
     <div className='my-4 flex gap-5'>
         <AddReview handleAddReview={handleAddReview}/>
