@@ -29,7 +29,7 @@ const Review = ({reviews}) => {
                 {console.log(rev)
                 }
                 <h1 className='font-semibold'>Autonumous</h1>
-                <Rate value={rev.rating}/>
+                <Rate disabled value={rev.rating}/>
                 <p>{rev.comment}</p>
               </div>
             ))}

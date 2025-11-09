@@ -25,7 +25,10 @@ const Products = () => {
     <div className="">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold my-2">Top Related Products</h1>
+        <div>
+        <button onClick={()=>navigate('/mycart')}>My cart</button>
         <h1 className="text-xl font-semibold">Your cart {totalQuantity}</h1>
+        </div>
       </div>
       <div className="flex gap-4">
         <div className="w-1/6 mt-10 ">
