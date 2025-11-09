@@ -89,3 +89,24 @@ export const resetpassword=catchAsynError(async(req,res,next)=>{
         sendtoken(user,201,res);
 
 })
+
+export const getuserprofile=catchAsynError(async(req,res,next)=>{
+        const user=await User.findById(req?.user?.id);
+        res.status(200).json({
+                user
+        })
+})
+
+export const updateuserprofile=catchAsynError(async(req,res,next)=>{
+        const newprofile={
+                name:req.body.name,
+                email:req.body.email
+        }
+        const user=await User.findByIdAndUpdate(req?.user?.id,newprofile,{new:true});
+        await user.save();
+        res.status(200).json({
+                user
+        })
+})
+
+

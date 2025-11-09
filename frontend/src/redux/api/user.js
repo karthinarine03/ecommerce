@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+
 export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3000/api/v1',
@@ -53,8 +54,15 @@ export const userApi = createApi({
           'Content-Type':'application/json'
         }
       })
+    }),
+    userprofile:build.query({
+      query:()=>({
+        url:"/me",
+        method:"GET",
+        credentials:"include"
+      })
     })
   }),
 })
 
-export const {useLoginMutation,useRegisterMutation,useLazyLogoutQuery,useForgotpasswordMutation,useResetpasswordMutation}=userApi;
+export const {useLoginMutation,useRegisterMutation,useLazyLogoutQuery,useForgotpasswordMutation,useResetpasswordMutation,useUserprofileQuery}=userApi;

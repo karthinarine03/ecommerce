@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useLazyLogoutQuery, useLoginMutation,  } from '../redux/api/user'
+import { useLazyLogoutQuery, useLoginMutation, useUserprofileQuery,  } from '../redux/api/user'
 
 const Header = () => {
-   const [logout]=useLazyLogoutQuery();
-   const [login,{data,error,isLoading}]=useLoginMutation();
-       console.log(data);
+  const [logout]=useLazyLogoutQuery();
+  const {data,error,isLoading}=useUserprofileQuery();
+   console.log(data);
    
   async function loggedout(){
 
@@ -19,9 +19,10 @@ const Header = () => {
             <img src="" alt="" />
             <div className='flex gap-4'>
                 {/* <img src="" alt="" /> */}
-               
-                  <button onClick={loggedout}className='text-white font-semibold'>logout</button>
-                   <Link to="/login" className='text-white font-semibold'>Login</Link>
+                  {data?
+                  <button onClick={loggedout}className='text-white font-semibold'>logout</button>:
+                  <Link to="/login" className='text-white font-semibold'>Login</Link>
+                  }
               
                 <Link to="/register" className='text-white font-semibold'>Register</Link>
             </div>
