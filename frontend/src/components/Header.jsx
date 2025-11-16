@@ -10,13 +10,13 @@ const Header = () => {
   async function loggedout(){
 
     const result=await logout();
-    console.log(result);
+
     
   }
   return (
     <div className='bg-orange-400'>
         <div className='flex justify-between p-3'>
-            <img src="" alt="" />
+            <h1 className='text-2xl text-white font-bold'>EComz</h1>
             <div className='flex gap-4'>
                 {/* <img src="" alt="" /> */}
                   {data?

@@ -15,6 +15,9 @@ const Review = ({reviews}) => {
       productId : reviews?._id
     })
   }
+
+  console.log(error,isLoading);
+  
   return (
     <div className='my-4 flex gap-5'>
         <AddReview handleAddReview={handleAddReview}/>
@@ -26,7 +29,7 @@ const Review = ({reviews}) => {
                 {console.log(rev)
                 }
                 <h1 className='font-semibold'>Autonumous</h1>
-                <Rate value={rev.rating}/>
+                <Rate disabled value={rev.rating}/>
                 <p>{rev.comment}</p>
               </div>
             ))}

@@ -7,6 +7,6 @@ const router=express.Router();
 
 router.get('/allProducts',isauthenticated,getAllProduct)
 router.get('/product/:id',getProduct)
-router.route('/product/review/add').post(addReview)
+router.route('/product/review/add').post(isauthenticated,addReview)
 
 export default router;
