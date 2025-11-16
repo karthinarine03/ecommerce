@@ -9,6 +9,7 @@ import seeder from './Utils/seeder.js';
 import cors from "cors"
 import deleteData from './Utils/deleteData.js';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 
 const app=express();
 app.use(express.json());
@@ -17,6 +18,9 @@ app.use(cors({
     credentials:true
 }))
 
+dotenv.config({path : '../backend/Config/config.env'})
+
+console.log(process.env.PORT);
 
 mongodb();
 

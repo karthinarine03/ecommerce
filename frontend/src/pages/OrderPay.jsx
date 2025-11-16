@@ -1,5 +1,5 @@
 import { Checkbox } from "antd";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import { usePlaceOrderMutation, useStripePayMutation } from "../redux/api/order";
@@ -14,7 +14,7 @@ const OrderPay = () => {
   const [pincode, setPincode] = useState("");
   const [state, setState] = useState("");
   console.log(items, pay);
-  console.log(data, error);
+  console.log(stripeData, stripeError);
 
   function submit() {
     if(pay == 'cash'){
@@ -33,10 +33,18 @@ const OrderPay = () => {
     }
 
     if(pay == 'UPIPay'){
-      stripePay({orderItems})
+      stripePay({orderItems : items})
     }
 
   }
+
+  useEffect(()=>{
+    if(stripeData){
+      window.location.href=stripeData?.url
+    }
+    console.log(stripeData?.url);
+    
+  },[stripeData,stripeLoading])
 
   return (
     <div>
