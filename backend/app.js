@@ -3,6 +3,8 @@ import { mongodb } from './Config/dbConnect.js';
 import userRouter from './Router/User.js'
 import errorHandling from './Middlewares/errorHandling.js';
 import productRouter from './Router/Product.js'
+import orderRouter from './Router/Order.js';
+import paymentRouter from './Router/Payment.js'
 import seeder from './Utils/seeder.js';
 import cors from "cors"
 import deleteData from './Utils/deleteData.js';
@@ -26,7 +28,9 @@ mongodb();
 app.use(cookieParser());
 
 app.use("/api/v1",userRouter);
-app.use('/api/v1',productRouter)
+app.use('/api/v1',productRouter);
+app.use('/api/v1',orderRouter);
+app.use('/api/v1',paymentRouter);
 app.use(errorHandling);
 
 

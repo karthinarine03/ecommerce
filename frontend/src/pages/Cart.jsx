@@ -2,11 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import {setRemoveItems} from '../redux/features/product'
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
   let total = 0;
   const { items, totalQuantity } = useSelector((state) => state.cart);
   const dispatch = useDispatch()
-  console.log(items);
+  const navigate = useNavigate()
 
   return (
     <div>
@@ -43,7 +44,8 @@ const Cart = () => {
         <h1 className="text-2xl font-bold ">
           SubTotal({totalQuantity}) : ₹{total}
         </h1>
-        <button className="bg-orange-400 px-4 rounded-md py-2 font-semibold">
+        <button className="bg-orange-400 px-4 rounded-md py-2 font-semibold"
+        onClick={()=>navigate("/placeOrder")}>
           Proceed to pay
         </button>
       </div>
