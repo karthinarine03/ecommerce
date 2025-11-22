@@ -1,3 +1,4 @@
+import { Rate } from "antd";
 
 
 const ProductCard = ({item}) => {
@@ -10,7 +11,10 @@ const ProductCard = ({item}) => {
         <div className="">
             <h1 className="font-bold text-3xl">₹{item?.price}</h1>
             <h2 className="font-semibold text-2xl">{item?.name}</h2>
-            <h2>over all ratings</h2>
+            <h2>
+              <Rate disabled defaultValue={Math.floor(item?.ratings)}/>
+              {item?.ratings?.toFixed(2)}
+            </h2>
         </div>
     </div>
 

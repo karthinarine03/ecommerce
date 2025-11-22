@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {setItems} from '../redux/features/product'
+import toast from "react-hot-toast";
 
 const ProductInfo = React.memo(({ product }) => {
   const dispatch = useDispatch()
@@ -15,6 +16,7 @@ const ProductInfo = React.memo(({ product }) => {
       count : cartCount
     }
     dispatch(setItems(cartProduct))
+    toast.success("Added to Cart")
   }
   return (
     <div className="flex mt-5">
