@@ -7,6 +7,7 @@ import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
 import ResetPassword from './components/ResetPassword'
 import Cart from './pages/Cart'
+import UserLayout from './layout/UserLayout'
 import OrderPay from './pages/OrderPay'
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/forgotpassword' element={<ForgotPassword/>}/>
           <Route path='/resetpassword/:token' element={<ResetPassword/>}/>
           <Route path='/mycart' element={<Cart/>}/>
+          <Route path='/user' element={<UserLayout/>}/>
           <Route path='/placeOrder' element={<OrderPay/>}/>
         </Routes>
       </Router>

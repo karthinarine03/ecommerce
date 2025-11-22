@@ -61,8 +61,31 @@ export const userApi = createApi({
         method:"GET",
         credentials:"include"
       })
-    })
+    }),
+  useravatar: build.mutation({
+  query: (body) => ({
+    url: "/uploadavatar",
+    method: "PUT",
+    body,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }),
+}),
+updateme:build.mutation({
+  query:(body)=>({
+    url:'/updateme',
+     method: "PUT",
+    body,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+})
+
   }),
 })
 
-export const {useLoginMutation,useRegisterMutation,useLazyLogoutQuery,useForgotpasswordMutation,useResetpasswordMutation,useUserprofileQuery}=userApi;
+export const {useLoginMutation,useRegisterMutation,useLazyLogoutQuery,useForgotpasswordMutation,useResetpasswordMutation,useUserprofileQuery,useUseravatarMutation,useUpdatemeMutation}=userApi;

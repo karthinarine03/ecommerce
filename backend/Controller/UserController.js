@@ -3,6 +3,7 @@ import User from "../Model/User.js";
 import sendtoken from "../Utils/sendtoken.js";
 import sendmail from "../Utils/sendmail.js";
 import crypt from 'crypto'
+import { delete_file, upload_file } from "../Utils/cloudinary.js";
 export const register=catchAsynError(async(req,res,next)=>{
         const {name,email,password}=req.body;
         if(!name || !email || !password){
@@ -92,6 +93,9 @@ export const resetpassword=catchAsynError(async(req,res,next)=>{
 
 export const getuserprofile=catchAsynError(async(req,res,next)=>{
         const user=await User.findById(req?.user?.id);
+        if(!user){
+               return next(new Error("user not exists"));
+        }
         res.status(200).json({
                 user
         })
@@ -108,5 +112,29 @@ export const updateuserprofile=catchAsynError(async(req,res,next)=>{
                 user
         })
 })
+
+export const uploadavatar = catchAsynError(async (req, res, next) => {
+  // Fetch the current user first
+  const user = await User.findById(req.user._id);
+
+  // If old avatar exists, delete it before uploading new one
+  if (user.avatar?.public_id) {
+    await delete_file(user.avatar.public_id);
+  }
+
+  // Upload new avatar
+  const avatarResponse = await upload_file(req.body.avatar, "ecom/avatars");
+
+  // Update user avatar
+  user.avatar = avatarResponse;
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Avatar uploaded successfully",
+    avatar: avatarResponse,
+  });
+});
+
 
 
